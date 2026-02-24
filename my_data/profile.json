@@ -1,0 +1,101 @@
+[
+  {
+    "id": "profile_001",
+    "category": "gioi_thieu_ban_than",
+    "content": "Tôi tên là Lê Thái Ngọc, quê gốc ở miền Trung Việt Nam và hiện đang sinh sống tại Đồng Nai. Về quá trình học tập thời phổ thông, tôi từng học tại trường Tiểu học Lê Thị Vân (lớp 1-3), Tiểu học Bình Đa (lớp 3-5), Tiểu học Nguyễn Chí Thanh (lớp 5), THCS Long Bình, và là cựu học sinh chuyên Toán tại trường THPT Chuyên Lương Thế Vinh (dù tự đánh giá bản thân học Toán không quá xuất sắc).",
+    "metadata": {
+      "source": "core_profile",
+      "keywords": ["Lê Thái Ngọc", "miền Trung", "Đồng Nai", "THPT Chuyên Lương Thế Vinh", "chuyên Toán", "THCS Long Bình", "Tiểu học Lê Thị Vân", "Tiểu học Bình Đa", "Tiểu học Nguyễn Chí Thanh"]
+    }
+  },
+  {
+    "id": "profile_002",
+    "category": "hoc_van_dai_hoc",
+    "content": "Hiện tại, tôi là sinh viên năm 3 ngành Trí tuệ Nhân tạo tại Trường Đại học Khoa học Tự nhiên - ĐHQG HCM (HCMUS). Tôi có kiến thức nền tảng về Toán rời rạc, mạng máy tính và hệ điều hành.",
+    "metadata": {
+      "source": "core_profile",
+      "keywords": ["Đại học Khoa học Tự nhiên", "ĐHQG HCM", "HCMUS", "sinh viên năm 3", "AI", "Toán rời rạc", "mạng máy tính"]
+    }
+  },
+  {
+    "id": "profile_003",
+    "category": "ky_nang_lap_trinh",
+    "content": "Các ngôn ngữ lập trình chủ lực của tôi là Python và C++. Ngoài ra, tôi cũng có khả năng làm việc với HTML, JavaScript cho mảng phát triển Web và sử dụng thành thạo Git/GitHub để quản lý phiên bản mã nguồn.",
+    "metadata": {
+      "source": "core_profile",
+      "keywords": ["Python", "C++", "HTML", "JavaScript", "Git", "GitHub"]
+    }
+  },
+  {
+    "id": "profile_004",
+    "category": "ky_nang_ngoai_ngu",
+    "content": "Về ngoại ngữ, tôi có nền tảng tiếng Anh vững chắc. Hiện tại, tôi đang có kế hoạch và mong muốn học thêm tiếng Đức để chuẩn bị cho mục tiêu du học Đức trong tương lai.",
+    "metadata": {
+      "source": "skills_goals",
+      "keywords": ["tiếng Anh", "tiếng Đức", "ngoại ngữ", "du học"]
+    }
+  },
+  {
+    "id": "profile_005",
+    "category": "chuyen_mon_ai",
+    "content": "Chuyên môn của tôi trong mảng AI trải đều từ Thị giác Máy tính (CV) sang Xử lý Ngôn ngữ Tự nhiên (NLP). Tôi đã có kinh nghiệm làm việc với các kiến trúc như YOLO, CNNs, BERT, và các LLMs (Qwen). Tôi từng làm các bài toán Nhận dạng thực thể có tên (NER), làm việc với GANs, áp dụng OCR xử lý văn bản Hán Nôm và tối ưu hóa siêu tham số. Tuy nhiên, tôi nhận thấy mình còn hơi thiếu các kỹ năng về Software Engineering như triển khai Docker hay xây dựng API.",
+    "metadata": {
+      "source": "core_profile",
+      "keywords": ["CV", "NLP", "YOLO", "CNNs", "BERT", "LLMs", "Qwen", "NER", "GANs", "OCR", "Docker", "API"]
+    }
+  },
+  {
+    "id": "profile_006",
+    "category": "du_an_he_thong",
+    "content": "Tôi đã thực hiện các dự án hệ thống như: Xây dựng công cụ quản trị từ xa (Remote Administration Tool) với server viết bằng C++ và client giao diện Web. Tôi cũng đã trực tiếp can thiệp và lập trình các system call như 'trace' và 'sysinfo' trên hệ điều hành xv6.",
+    "metadata": {
+      "source": "projects",
+      "keywords": ["C++ server", "Remote Admin", "xv6", "system call"]
+    }
+  },
+  {
+    "id": "profile_007",
+    "category": "du_an_chatbot",
+    "content": "Tôi đang phát triển một dự án Chatbot cá nhân hóa. Tôi sử dụng dữ liệu trích xuất từ lịch sử chat Messenger của chính mình, tiến hành làm sạch và chuẩn hóa từ lóng để fine-tune mô hình ngôn ngữ Qwen, giúp chatbot học được phong cách giao tiếp của tôi.",
+    "metadata": {
+      "source": "projects",
+      "keywords": ["Chatbot", "Messenger", "fine-tune", "Qwen", "từ lóng"]
+    }
+  },
+  {
+    "id": "profile_008",
+    "category": "du_an_tu_dong_hoa",
+    "content": "Để tập trung ôn thi, tôi tự viết script bằng Python can thiệp vào file hosts và lệnh taskkill để tự động chặn các ứng dụng xao nhãng như Facebook, YouTube, Discord và game. Tuy nhiên, tôi đã thiết lập ngoại lệ: không chặn Zalo vì cần dùng cho công việc, và không chặn mạng xã hội X (Twitter) vì ít sử dụng.",
+    "metadata": {
+      "source": "projects",
+      "keywords": ["Python script", "tự động hóa", "block web", "hosts file", "Zalo", "Twitter"]
+    }
+  },
+  {
+    "id": "profile_009",
+    "category": "so_thich_va_kien_thuc",
+    "content": "Về sở thích giải trí, tôi thích chơi game (Liên Minh Huyền Thoại - LOL, Clash of Clans - CoC), thích xem các giải đấu CS2 và đam mê đá bóng. Bên cạnh kiến thức chuyên môn, tôi có hiểu biết rộng về nhiều lĩnh vực như Lịch sử, Địa lý, các thông tin đại chúng và rất thích tìm hiểu về nhiều nền văn hóa khác nhau trên thế giới.",
+    "metadata": {
+      "source": "lifestyle",
+      "keywords": ["game", "LOL", "CoC", "CS2", "đá bóng", "Lịch sử", "Địa lý", "văn hóa", "thông tin đại chúng"]
+    }
+  },
+  {
+    "id": "profile_010",
+    "category": "muc_tieu_tuong_lai",
+    "content": "Trong tương lai, tôi có ý muốn và dự định sẽ đi du học tại Đức để tiếp tục phát triển con đường học vấn và trải nghiệm môi trường quốc tế.",
+    "metadata": {
+      "source": "goals",
+      "keywords": ["du học", "Đức", "tương lai", "mục tiêu"]
+    }
+  },
+  {
+    "id": "profile_011",
+    "category": "loi_song_suc_khoe",
+    "content": "Do đặc thù ngành IT phải ngồi nhiều, tôi rất chú trọng đến công thái học (ergonomics). Tôi tìm hiểu kỹ về các nguyên nhân gây thoát vị đĩa đệm, tiêu chuẩn của ghế công thái học, cũng như tư thế làm việc và nghỉ ngơi chuẩn để bảo vệ cột sống.",
+    "metadata": {
+      "source": "lifestyle",
+      "keywords": ["sức khỏe", "công thái học", "ergonomics", "thoát vị đĩa đệm", "cột sống"]
+    }
+  }
+]
