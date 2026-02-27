@@ -37,14 +37,12 @@ root/
 
 ## 3. Requirements
 
-* Python **3.10+** - **GPU** recommended (CUDA / cuDNN) for training and faster inference
+* Python **3.10+** - **GPU** recommended (CUDA / cuDNN).
 
 Install dependencies:
 
 ```bash
-pip install unsloth peft trl
-pip install transformers==4.56.2
-
+pip install requirements.txt
 ```
 
 ---
@@ -116,29 +114,32 @@ Before running the training cells, you must update the prompt templates within t
 
 ---
 
-## 6. Inference (Real Conversation)
+## 6. Inference & API Deployment
 
-Run inference using the fine-tuned LoRA checkpoint:
+The inference pipeline is designed to be highly flexible and cost-effective. It uses a split architecture: hosting the language model in the cloud for free, while handling context retrieval (RAG) and bot integration locally.
+
+### 6.1 Hosting the LLM via Kaggle (Free Tier)
+
+Because the fine-tuned model is exported to the **GGUF** format during the training phase, the Qwen 3 4B model is highly optimized and does not require a GPU for inference. You can run it completely free using Kaggle's standard CPU sessions.
+
+1. Open the inference and API notebook: [AI Persona Clone - Inference & API](https://www.kaggle.com/code/lnhingtribcthang/my-clone-api).
+2. Load the GGUF output generated from your training notebook.
+3. Run the notebook cells. It will load the model and expose it as a web service using **ngrok**.
+4. Copy the public ngrok API URL provided in the output.
+
+### 6.2 Local RAG & Telegram Bot Integration
+
+With the heavy lifting of the LLM hosted on Kaggle, your local machine will handle the Vector Database searches (RAG) and interface with your messaging platform.
+
+1. Ensure your local vector database is built (completed in Step 4).
+2. Configure your local environment (or `.env` file) with the generated ngrok URL and your Telegram Bot token.
+3. Start the local API server:
 
 ```bash
-python src/inference/run_inference.py \
-  --base_model unsloth/Qwen3-4B-Instruct-2507-unsloth-bnb-4bit \
-  --lora_checkpoint path/to/checkpoint \
-  --category friends \
-  --input_text "Hôm nay đi đá bóng không?"
-
+python source/api.py
 ```
 
-Example shell script:
-
-```bash
-#!/bin/bash
-python src/inference/infer_persona.py \
-  --lora_checkpoint models/persona_clone_best \
-  --user_input "Can you explain this AI project?" \
-  --style polite
-
-```
+`source/api.py` acts as the main orchestrator: it receives messages from the Telegram bot, retrieves the relevant historical context from your local database, sends the RAG-augmented prompt to the Kaggle ngrok endpoint, and delivers the personalized response back to the user.
 
 ---
 

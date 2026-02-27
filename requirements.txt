@@ -1,0 +1,7 @@
+tqdm
+underthesea-core
+telebot
+openai
+langchain-huggingface
+langchain-chroma
+langchain-core
