@@ -1,58 +1,58 @@
 import json
 import os
+import sys
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 
-# --- CẤU HÌNH ĐƯỜNG DẪN (PATH CONFIGURATION) ---
-
-# 1. Xác định vị trí file code hiện tại (trong thư mục source)
+# --- CẤU HÌNH ĐƯỜNG DẪN ---
 current_dir = os.path.dirname(os.path.abspath(__file__))
-
-# 2. Xác định thư mục chứa data (ngang hàng với source)
-# Đi ngược ra thư mục cha (..) rồi vào my_data
 data_dir = os.path.join(current_dir, '..', 'my_data')
-
-# 3. Đường dẫn file JSON đầu vào
 input_json_path = os.path.join(data_dir, 'profile.json')
-
-# 4. Đường dẫn thư mục lưu Vector DB đầu ra
 db_output_path = os.path.join(data_dir, 'knowledge_db')
 
-# Đảm bảo thư mục my_data tồn tại (tránh lỗi nếu chưa có)
-if not os.path.exists(data_dir):
-    os.makedirs(data_dir)
-    print(f"Đã tạo thư mục: {data_dir}")
+# Logic đúng: Chỉ tạo thư mục cho ĐẦU RA nếu chưa có.
+if not os.path.exists(db_output_path):
+    os.makedirs(db_output_path)
+    print(f"Đã tạo thư mục lưu Vector DB: {db_output_path}")
 
 print(f"📂 Đang đọc dữ liệu từ: {input_json_path}")
-print(f"📂 DB sẽ được lưu tại: {db_output_path}")
 
 
 # --- PHẦN XỬ LÝ LOGIC ---
 
 def load_data(file_path):
+    if not os.path.exists(file_path):
+        print(f"❌ LỖI: Không tìm thấy file nguồn tại {file_path}.")
+        sys.exit(1) # Trả về mã lỗi tiêu chuẩn
+        
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        return data
-    except FileNotFoundError:
-        print(f"❌ LỖI: Không tìm thấy file {file_path}. Hãy kiểm tra lại vị trí file JSON.")
-        exit()
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"❌ LỖI: File JSON bị sai định dạng: {e}")
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ LỖI KHÔNG XÁC ĐỊNH khi đọc file: {e}")
+        sys.exit(1)
 
 
-# Load dữ liệu
 raw_data = load_data(input_json_path)
 
-# Chuyển đổi JSON thành LangChain Documents
 documents = []
 for item in raw_data:
-    meta = item.get('metadata', {})
-    meta['category'] = item.get('category', 'unknown')
-    meta['original_id'] = item.get('id', 'unknown')
+    # Sử dụng .copy() để tránh thay đổi trực tiếp dữ liệu gốc trong bộ nhớ
+    meta = item.get('metadata', {}).copy()
+    
+    # Đảm bảo các giá trị thêm vào tương thích với Schema của ChromaDB (str, int, float, bool)
+    meta['category'] = str(item.get('category', 'unknown'))
+    meta['original_id'] = str(item.get('id', 'unknown'))
 
-    # Gom các keywords thành string để lưu vào metadata (Chroma yêu cầu metadata phẳng)
-    if 'keywords' in meta and isinstance(meta['keywords'], list):
-        meta['keywords_str'] = ", ".join(meta['keywords'])
+    if 'keywords' in meta:
+        if isinstance(meta['keywords'], list):
+            meta['keywords_str'] = ", ".join(meta['keywords'])
+        # BẮT BUỘC: Xóa kiểu dữ liệu phức hợp (list) để tránh ValueError từ ChromaDB
+        del meta['keywords']
 
     doc = Document(
         page_content=item.get('content', ''),
@@ -60,21 +60,22 @@ for item in raw_data:
     )
     documents.append(doc)
 
-print(f"✅ Đã load {len(documents)} bản ghi.")
+print(f"✅ Đã load {len(documents)} bản ghi hợp lệ.")
 
-# Khởi tạo Embedding Model
-print("⏳ Đang tải model embedding (có thể mất chút thời gian lần đầu)...")
+print("⏳ Đang tải model embedding...")
 embedding_model = HuggingFaceEmbeddings(
     model_name="bkai-foundation-models/vietnamese-bi-encoder"
 )
 
-# Tạo và lưu Vector Database
 print("⏳ Đang tạo Vector Database...")
-vector_db = Chroma.from_documents(
-    documents=documents,
-    embedding=embedding_model,
-    persist_directory=db_output_path
-)
-
-print("-" * 40)
-print(f"✅ HOÀN TẤT! Vector Database đã được lưu vào: {db_output_path}")
+try:
+    vector_db = Chroma.from_documents(
+        documents=documents,
+        embedding=embedding_model,
+        persist_directory=db_output_path
+    )
+    print("-" * 40)
+    print(f"✅ HOÀN TẤT! Vector Database đã được lưu vào: {db_output_path}")
+except Exception as e:
+    print(f"❌ LỖI KHI TẠO VECTOR DB: {e}")
+    sys.exit(1)
