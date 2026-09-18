@@ -6,8 +6,11 @@ endpoint_name: qwen-rag-endpoint-ver1
 model: azureml:qwen3-4b-gguf-model:1
 
 environment:
-  # Trỏ tới Image bạn vừa đẩy lên ACR
-  image: 63b2ec7eba0d44ea9a68fb9ece0790a2.azurecr.io/qwen-rag-api:v1
+  # ⚠️ Giá trị dưới đây chỉ là placeholder. Nó luôn bị ghi đè tự động bởi bước
+  # "Docker Build & Push Image" trong .github/workflows/deploy.yml (lệnh sed),
+  # vì tên ACR thật do infra.yml (Bicep) tạo mới mỗi lần và không cố định.
+  # Không cần và không nên sửa tay giá trị này.
+  image: PLACEHOLDER-ACR.azurecr.io/qwen-rag-api:v1
   inference_config:
     liveness_route:
       port: 8000

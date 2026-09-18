@@ -6,13 +6,11 @@ on:
       - 'v*.*.*' # Chỉ chạy khi có git tag dạng v1.0.0
 
 env:
-  WORKSPACE: "mlops-workspace"                       # TODO: đổi thành tên Azure ML Workspace thật của bạn
-  RESOURCE_GROUP: "mlops-rg"                   # TODO: đổi thành tên Resource Group thật của bạn
-  ACR_NAME: "63b2ec7eba0d44ea9a68fb9ece0790a2"        # Lấy đúng theo azure/deployment.yml (image: <ACR_NAME>.azurecr.io/...)
+  WORKSPACE: ${{ vars.WORKSPACE || 'qwen-twin-workspace' }}         # Cùng nguồn với infra.yml (GitHub repo Variable)
+  RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP || 'digital-twin-rg' }} # Cùng nguồn với infra.yml (GitHub repo Variable)
   IMAGE_NAME: "qwen-rag-api"                          # Khớp với azure/deployment.yml
   ENDPOINT_NAME: "qwen-rag-endpoint-ver1"              # Khớp với azure/endpoint.yml
   DEPLOYMENT_NAME: "rag-deployment-ver1"               # Khớp với azure/deployment.yml
-  MODEL_FILENAME: "qwen3-4b-instruct-2507.Q4_K_M.gguf" # Khớp với azure/model.yml
   IMAGE_TAG: "v1.${{ github.run_number }}"            # Tag image linh hoạt theo từng lần chạy
 
 jobs:
@@ -34,14 +32,21 @@ jobs:
         run: |
           az configure --defaults workspace=${{ env.WORKSPACE }} group=${{ env.RESOURCE_GROUP }}
 
-      # ⚠️ File .gguf (~2-3GB) không được commit trong repo (không thấy trong source/).
-      # Cần tải nó về đây trước khi build & register, ví dụ từ GitHub Release, Azure Blob Storage
-      # hoặc output của Kaggle notebook training. Điền lệnh thật vào bên dưới.
-      - name: Download Fine-tuned GGUF Model
+      # ACR là tài nguyên do infra.yml (Bicep) tạo ra với tên tự sinh — không hard-code ở đây.
+      # Tự tìm ACR duy nhất đang có trong Resource Group để đảm bảo deploy.yml luôn khớp với hạ tầng hiện tại.
+      - name: Discover ACR in Resource Group
         run: |
-          echo "TODO: Tải ${{ env.MODEL_FILENAME }} về thư mục source/ trước khi tiếp tục."
-          echo "Ví dụ: az storage blob download ... hoặc curl -L <release_url> -o source/${{ env.MODEL_FILENAME }}"
-          test -f "source/${{ env.MODEL_FILENAME }}" || { echo "::error::Thiếu file model GGUF, dừng pipeline."; exit 1; }
+          ACR_NAME=$(az acr list -g ${{ env.RESOURCE_GROUP }} --query "[0].name" -o tsv)
+          if [ -z "$ACR_NAME" ]; then
+            echo "::error::Không tìm thấy ACR nào trong Resource Group ${{ env.RESOURCE_GROUP }}. Đã chạy workflow infra.yml (Bicep) chưa?"
+            exit 1
+          fi
+          echo "Tìm thấy ACR: $ACR_NAME"
+          echo "ACR_NAME=$ACR_NAME" >> "$GITHUB_ENV"
+
+      # BYOM: model .gguf đã được huấn luyện, đóng băng và đăng ký sẵn trong Azure ML Models
+      # (azure/model.yml chỉ còn dùng để đối chiếu tên/version khi kiểm tra idempotent bên dưới).
+      # Container lấy model trực tiếp qua AZUREML_MODEL_DIR khi Azure ML mount deployment — không cần tải gì ở đây.
 
       - name: Login to Azure Container Registry (ACR)
         run: az acr login --name ${{ env.ACR_NAME }}

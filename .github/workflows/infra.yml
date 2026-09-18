@@ -1,0 +1,46 @@
+name: Provision Infrastructure (Bicep)
+
+on:
+  workflow_dispatch:
+    inputs:
+      location:
+        description: 'Azure region để triển khai'
+        required: false
+        default: 'eastasia'
+  push:
+    branches: [main]
+    paths:
+      - 'infra/**'
+
+jobs:
+  deploy-infra:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # scope=subscription vì template infra/main.bicep tự tạo Resource Group,
+      # nên bắt buộc phải deploy ở cấp subscription (RG chưa tồn tại lúc bắt đầu).
+      - name: Deploy Bicep - tạo toàn bộ RG + tài nguyên
+        uses: azure/arm-deploy@v2
+        with:
+          scope: subscription
+          region: ${{ github.event.inputs.location || 'eastasia' }}
+          template: infra/main.bicep
+          deploymentName: mlops-infra-${{ github.run_number }}
+          parameters: >
+            resourceGroupName=${{ vars.RESOURCE_GROUP || 'digital-twin-rg' }}
+            workspaceName=${{ vars.WORKSPACE || 'qwen-twin-workspace' }}
+            keyVaultName=${{ vars.KEY_VAULT_NAME || 'qwen-rag-vault' }}
+            githubActionsPrincipalId=${{ secrets.AZURE_SP_OBJECT_ID }}
+      # Không truyền acrName: Bicep tự sinh tên duy nhất (deterministic) — xem infra/main.bicep.
+      # deploy.yml sẽ tự tìm ra ACR này bằng `az acr list -g <resource_group>`, không hard-code ở đâu cả.
+
+      - name: In kết quả triển khai
+        run: |
+          echo "Hạ tầng đã được tạo. deploy.yml sẽ tự tìm ra ACR bằng 'az acr list', không cần copy tay giá trị nào."
