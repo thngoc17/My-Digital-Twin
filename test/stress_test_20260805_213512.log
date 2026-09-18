@@ -1,0 +1,230 @@
+2026-08-05 21:35:12,233 | INFO | Authenticating with Azure Key Vault at https://qwen-rag-vault.vault.azure.net...
+2026-08-05 21:35:12,233 | INFO | No environment configuration found.
+2026-08-05 21:35:12,245 | INFO | ManagedIdentityCredential will use IMDS
+2026-08-05 21:35:12,247 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-endpoint-url/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'ddbad215-90da-11f1-a70b-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+No body was attached to the request
+2026-08-05 21:35:17,928 | INFO | Response status: 401
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': 'ddbad215-90da-11f1-a70b-2c3b70e619d8'
+    'x-ms-request-id': '3e28c4a1-0574-4ed2-878f-d2c5e39d5b7c'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.160;act_addr_fam=InterNetwork;'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'WWW-Authenticate': 'Bearer authorization="https://login.microsoftonline.com/40127cd4-45f3-49a3-b05d-315a43a9f033", resource="https://vault.azure.net"'
+    'Date': 'Wed, 05 Aug 2026 14:35:18 GMT'
+    'Content-Length': '108'
+2026-08-05 21:35:17,930 | INFO | Request URL: 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=REDACTED'
+Request method: 'GET'
+Request headers:
+    'User-Agent': 'azsdk-python-identity/1.25.3 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+No body was attached to the request
+2026-08-05 21:35:20,179 | INFO | DefaultAzureCredential acquired a token from AzureCliCredential
+2026-08-05 21:35:20,180 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-endpoint-url/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'ddbad215-90da-11f1-a70b-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-08-05 21:35:20,449 | INFO | Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': 'ddbad215-90da-11f1-a70b-2c3b70e619d8'
+    'x-ms-request-id': '634bf481-02c5-49f1-be01-72bd5f8c1cf7'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.160;act_addr_fam=InterNetwork;'
+    'x-ms-keyvault-rbac-assignment-id': 'REDACTED'
+    'x-ms-keyvault-rbac-cache': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'Date': 'Wed, 05 Aug 2026 14:35:20 GMT'
+    'Content-Length': '351'
+2026-08-05 21:35:20,451 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-api-key/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'e29eb36d-90da-11f1-b784-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-08-05 21:35:20,526 | INFO | Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': 'e29eb36d-90da-11f1-b784-2c3b70e619d8'
+    'x-ms-request-id': '6cada2b4-5d53-4535-be66-0c4fa7e99fd6'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.160;act_addr_fam=InterNetwork;'
+    'x-ms-keyvault-rbac-assignment-id': 'REDACTED'
+    'x-ms-keyvault-rbac-cache': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'Date': 'Wed, 05 Aug 2026 14:35:20 GMT'
+    'Content-Length': '363'
+2026-08-05 21:35:20,528 | INFO | Successfully decrypted API configuration keys.
+2026-08-05 21:35:20,528 | INFO | ==================================================
+2026-08-05 21:35:20,528 | INFO | INITIATING STEP-LOAD STRESS TEST SEQUENCE
+2026-08-05 21:35:20,529 | INFO | ==================================================
+2026-08-05 21:35:20,529 | INFO | 
+[PHASE] Testing with 1 concurrent users...
+2026-08-05 21:35:41,259 | INFO | [PHASE REPORT: 1 USERS]
+2026-08-05 21:35:41,260 | INFO |    - Success Rate   : 100.00% (1/1)
+2026-08-05 21:35:41,260 | INFO |    - Error Count    : 0
+2026-08-05 21:35:41,260 | INFO |    - Avg Latency    : 20.73s
+2026-08-05 21:35:41,260 | INFO |    - Min/Max Latency: 20.73s / 20.73s
+2026-08-05 21:35:41,260 | INFO |    - Tier Duration  : 20.73s
+2026-08-05 21:35:41,261 | INFO | Cooling down... Waiting 20s before scaling up load.
+2026-08-05 21:36:01,262 | INFO | 
+[PHASE] Testing with 2 concurrent users...
+2026-08-05 21:36:42,428 | INFO | [PHASE REPORT: 2 USERS]
+2026-08-05 21:36:42,428 | INFO |    - Success Rate   : 100.00% (2/2)
+2026-08-05 21:36:42,429 | INFO |    - Error Count    : 0
+2026-08-05 21:36:42,429 | INFO |    - Avg Latency    : 28.75s
+2026-08-05 21:36:42,429 | INFO |    - Min/Max Latency: 16.34s / 41.16s
+2026-08-05 21:36:42,429 | INFO |    - Tier Duration  : 41.17s
+2026-08-05 21:36:42,430 | INFO | Cooling down... Waiting 20s before scaling up load.
+2026-08-05 21:37:02,431 | INFO | 
+[PHASE] Testing with 5 concurrent users...
+2026-08-05 21:37:02,615 | WARNING | User-0: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:02,642 | WARNING | User-4: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:02,646 | WARNING | User-3: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:39,398 | INFO | [PHASE REPORT: 5 USERS]
+2026-08-05 21:37:39,399 | INFO |    - Success Rate   : 40.00% (2/5)
+2026-08-05 21:37:39,399 | INFO |    - Error Count    : 3
+2026-08-05 21:37:39,399 | INFO |    - Avg Latency    : 27.97s
+2026-08-05 21:37:39,399 | INFO |    - Min/Max Latency: 18.98s / 36.96s
+2026-08-05 21:37:39,399 | INFO |    - Tier Duration  : 36.97s
+2026-08-05 21:37:39,399 | INFO | Cooling down... Waiting 20s before scaling up load.
+2026-08-05 21:37:59,401 | INFO | 
+[PHASE] Testing with 10 concurrent users...
+2026-08-05 21:37:59,609 | WARNING | User-1: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,617 | WARNING | User-8: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,619 | WARNING | User-5: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,621 | WARNING | User-9: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,622 | WARNING | User-7: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,622 | WARNING | User-3: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,622 | WARNING | User-4: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:37:59,622 | WARNING | User-6: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:38:48,491 | INFO | [PHASE REPORT: 10 USERS]
+2026-08-05 21:38:48,491 | INFO |    - Success Rate   : 20.00% (2/10)
+2026-08-05 21:38:48,492 | INFO |    - Error Count    : 8
+2026-08-05 21:38:48,492 | INFO |    - Avg Latency    : 35.91s
+2026-08-05 21:38:48,492 | INFO |    - Min/Max Latency: 22.73s / 49.08s
+2026-08-05 21:38:48,492 | INFO |    - Tier Duration  : 49.09s
+2026-08-05 21:38:48,493 | INFO | Cooling down... Waiting 20s before scaling up load.
+2026-08-05 21:39:08,494 | INFO | 
+[PHASE] Testing with 15 concurrent users...
+2026-08-05 21:39:08,695 | WARNING | User-3: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,699 | WARNING | User-2: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,771 | WARNING | User-1: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,777 | WARNING | User-12: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,783 | WARNING | User-14: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,786 | WARNING | User-4: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,796 | WARNING | User-13: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,799 | WARNING | User-11: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,802 | WARNING | User-9: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,811 | WARNING | User-5: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,811 | WARNING | User-10: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,811 | WARNING | User-7: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:08,811 | WARNING | User-8: Error 429 - 
+Please check this guide to understand why this error code might have been returned 
+https://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes
+
+2026-08-05 21:39:49,909 | INFO | [PHASE REPORT: 15 USERS]
+2026-08-05 21:39:49,909 | INFO |    - Success Rate   : 13.33% (2/15)
+2026-08-05 21:39:49,910 | INFO |    - Error Count    : 13
+2026-08-05 21:39:49,910 | INFO |    - Avg Latency    : 29.67s
+2026-08-05 21:39:49,910 | INFO |    - Min/Max Latency: 17.95s / 41.40s
+2026-08-05 21:39:49,910 | INFO |    - Tier Duration  : 41.42s
+2026-08-05 21:39:49,910 | INFO | 
+==================================================
+2026-08-05 21:39:49,912 | INFO | TEST COMPLETE. Logs saved at: E:\PyCharm\My_Digital_Twin\test\stress_test_20260805_213512.log
+2026-08-05 21:39:49,912 | INFO | ==================================================

@@ -4,22 +4,22 @@ import re
 from tqdm import tqdm
 from underthesea_core import TextPreprocessor
 
-# ================= CẤU HÌNH ĐƯỜNG DẪN TỰ ĐỘNG =================
+# ================= AUTOMATED PATH CONFIGURATION =================
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "my_data", "facebook_chat"))
 OUTPUT_FILE = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "my_data", "train_data.jsonl"))
 
-MY_NAME = "Lê Thái Ngọc" # <- Replace by your name
+MY_NAME = "Lê Thái Ngọc" # Target user name for assistant role mapping
 
-# Cấu hình ngưỡng thời gian
+# Time threshold configuration
 MERGE_TIMEOUT = 60
 SESSION_TIMEOUT = 3600 * 2
 
-print(f"Thư mục Data: {DATA_DIR}")
-print(f"File Output: {OUTPUT_FILE}")
+print(f"INFO: Data Directory resolved at {DATA_DIR}")
+print(f"INFO: Output File targeted at {OUTPUT_FILE}")
 print("-" * 50)
 
-# ================= KHỞI TẠO TEXT PREPROCESSOR CHO LLM =================
+# ================= INITIALIZE LLM TEXT PREPROCESSOR =================
 pp = TextPreprocessor(
     lowercase=False,
     unicode_normalize=True,
@@ -31,7 +31,7 @@ pp = TextPreprocessor(
     negation_window=0
 )
 
-# ================= TỪ ĐIỂN PHÂN LOẠI (CLASSIFICATION) =================
+# ================= CLASSIFICATION DICTIONARIES =================
 KEYWORDS = {
     "friends": [
         "tao", "mày", "dm", "vcl", "vl", "đm", "đéo", "dell",
@@ -48,7 +48,7 @@ KEYWORDS = {
 }
 
 
-# ================= CÁC HÀM XỬ LÝ LOGIC =================
+# ================= CORE LOGIC FUNCTIONS =================
 def classify_conversation(session_messages):
     scores = {"friends": 0, "elders": 0, "polite": 0}
     full_text = " ".join([m['content'].lower() for m in session_messages]).lower()
@@ -105,9 +105,9 @@ def get_content(msg):
             content = raw_text
 
     if not content:
-        if 'photos' in msg: return "[Gửi một hình ảnh]"
-        if 'videos' in msg: return "[Gửi một video]"
-        if 'sticker' in msg: return "[Gửi một sticker]"
+        if 'photos' in msg: return "[Image sent]"
+        if 'videos' in msg: return "[Video sent]"
+        if 'sticker' in msg: return "[Sticker sent]"
         return ""
 
     return content
@@ -120,12 +120,12 @@ def process_file(file_path):
     except:
         return []
 
-    # === LOGIC LỌC GROUP CHAT CHẶT CHẼ HƠN ===
-    # 1. Nếu Facebook đánh dấu rõ đây là Group -> Bỏ qua
+    # === STRICT GROUP CHAT FILTERING LOGIC ===
+    # 1. Skip explicit RegularGroup threads
     if data.get('thread_type') == 'RegularGroup':
         return []
 
-    # 2. Nếu có nhiều hơn 2 người tham gia -> Bỏ qua
+    # 2. Skip threads with more than 2 participants
     if len(data.get('participants', [])) > 2:
         return []
 
@@ -186,10 +186,10 @@ def process_file(file_path):
 
 def main():
     if not os.path.exists(DATA_DIR):
-        print(f"LỖI: Không tìm thấy thư mục {DATA_DIR}!")
+        print(f"ERROR: Data directory not found at {DATA_DIR}")
         return
 
-    print(f"Đang quét đệ quy toàn bộ thư mục {DATA_DIR}...")
+    print(f"INFO: Recursively scanning directory {DATA_DIR}...")
     target_files = []
 
     for root, dirs, files in os.walk(DATA_DIR):
@@ -198,10 +198,10 @@ def main():
                 target_files.append(os.path.join(root, file))
 
     if not target_files:
-        print("Không tìm thấy file json nào!")
+        print("WARNING: No matching JSON files found.")
         return
 
-    print(f"Tìm thấy {len(target_files)} đoạn chat. Bắt đầu xử lý...")
+    print(f"INFO: Found {len(target_files)} chat threads. Initiating processing...")
 
     final_dataset = []
     for file_path in tqdm(target_files):
@@ -213,13 +213,13 @@ def main():
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
-    print(f"Đang ghi {len(final_dataset)} mẫu vào {OUTPUT_FILE}...")
+    print(f"INFO: Writing {len(final_dataset)} samples to {OUTPUT_FILE}...")
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         for entry in final_dataset:
             json.dump(entry, f, ensure_ascii=False)
             f.write('\n')
 
-    print("Hoàn tất! Dữ liệu đã chuẩn hóa xong bằng TextPreprocessor.")
+    print("SUCCESS: Data normalization completed successfully using TextPreprocessor.")
 
 
 if __name__ == "__main__":

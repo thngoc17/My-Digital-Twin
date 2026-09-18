@@ -1,0 +1,27 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: rag-deployment-ver1
+endpoint_name: qwen-rag-endpoint-ver1
+
+# Chỉ định mô hình đã đăng ký ở Ngày 3. Azure sẽ tải và mount nó vào AZUREML_MODEL_DIR
+model: azureml:qwen3-4b-gguf-model:1
+
+environment:
+  # Trỏ tới Image bạn vừa đẩy lên ACR
+  image: 63b2ec7eba0d44ea9a68fb9ece0790a2.azurecr.io/qwen-rag-api:v1
+  inference_config:
+    liveness_route:
+      port: 8000
+      path: /docs
+    readiness_route:
+      port: 8000
+      path: /docs
+    scoring_route:
+      port: 8000
+      path: /chat
+
+request_settings:
+  request_timeout_ms: 180000
+
+# Cấu hình tài nguyên máy ảo
+instance_type: Standard_DS2_v2
+instance_count: 1

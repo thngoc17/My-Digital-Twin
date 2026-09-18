@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+type: uri_folder
+name: personal_knowledge_vector_db
+description: "Vector database chứa dữ liệu cá nhân"
+# [ĐÃ SỬA]: Lùi 1 cấp, tiến vào thư mục my_data/
+path: ../my_data/knowledge_db/

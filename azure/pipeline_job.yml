@@ -1,0 +1,29 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+experiment_name: build_knowledge_db_pipeline
+
+resources:
+  instance_type: Standard_DS3_v2
+
+environment:
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+  # Giả định tệp conda.yml được đặt chung trong thư mục azure/
+  conda_file: ./conda.yml
+
+inputs:
+  profile_source:
+    type: uri_file
+    path: azureml:profile_json_data:1
+    mode: ro_mount
+
+outputs:
+  vector_db_output:
+    type: uri_folder
+    path: azureml://datastores/workspaceblobstore/paths/vector_db/
+    mode: rw_mount
+
+# [ĐÃ SỬA]: Trỏ ngược ra thư mục gốc, sau đó nạp toàn bộ thư mục 'source/' lên đám mây.
+code: ../source
+command: >-
+  python build_db.py 
+  --input_data ${{inputs.profile_source}} 
+  --output_db ${{outputs.vector_db_output}}

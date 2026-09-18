@@ -1,0 +1,143 @@
+2026-08-22 16:10:23,619 | INFO | No environment configuration found.
+2026-08-22 16:10:23,629 | INFO | ManagedIdentityCredential will use IMDS
+2026-08-22 16:10:23,631 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-endpoint-url/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '4ea1d8d9-9e09-11f1-b6d1-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+No body was attached to the request
+2026-08-22 16:10:25,485 | INFO | Response status: 401
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': '4ea1d8d9-9e09-11f1-b6d1-2c3b70e619d8'
+    'x-ms-request-id': '2a29ca67-3c06-4534-b9d4-d6d174f225db'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.132;act_addr_fam=InterNetwork;'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'WWW-Authenticate': 'Bearer authorization="https://login.microsoftonline.com/40127cd4-45f3-49a3-b05d-315a43a9f033", resource="https://vault.azure.net"'
+    'Date': 'Sat, 22 Aug 2026 09:10:24 GMT'
+    'Content-Length': '108'
+2026-08-22 16:10:25,488 | INFO | Request URL: 'http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=REDACTED'
+Request method: 'GET'
+Request headers:
+    'User-Agent': 'azsdk-python-identity/1.25.3 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+No body was attached to the request
+2026-08-22 16:10:27,575 | INFO | DefaultAzureCredential acquired a token from AzureCliCredential
+2026-08-22 16:10:27,576 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-endpoint-url/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '4ea1d8d9-9e09-11f1-b6d1-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-08-22 16:10:27,677 | INFO | Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': '4ea1d8d9-9e09-11f1-b6d1-2c3b70e619d8'
+    'x-ms-request-id': 'ae0a8886-d0b5-4ee1-9088-ff4c02cebcc3'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.132;act_addr_fam=InterNetwork;'
+    'x-ms-keyvault-rbac-assignment-id': 'REDACTED'
+    'x-ms-keyvault-rbac-cache': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'Date': 'Sat, 22 Aug 2026 09:10:26 GMT'
+    'Content-Length': '351'
+2026-08-22 16:10:27,679 | INFO | Request URL: 'https://qwen-rag-vault.vault.azure.net/secrets/azure-api-key/?api-version=2025-07-01'
+Request method: 'GET'
+Request headers:
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '510b69b5-9e09-11f1-a330-2c3b70e619d8'
+    'User-Agent': 'azsdk-python-keyvault-secrets/4.11.0 Python/3.12.12 (Windows-11-10.0.26200-SP0)'
+    'Authorization': 'REDACTED'
+No body was attached to the request
+2026-08-22 16:10:27,985 | INFO | Response status: 200
+Response headers:
+    'Cache-Control': 'no-cache'
+    'Pragma': 'no-cache'
+    'Content-Type': 'application/json; charset=utf-8'
+    'Expires': '-1'
+    'x-ms-keyvault-region': 'eastasia'
+    'x-ms-client-request-id': '510b69b5-9e09-11f1-a330-2c3b70e619d8'
+    'x-ms-request-id': 'b83187ee-9dd3-4b79-94ea-a6c80dc27336'
+    'x-ms-keyvault-service-version': '1.9.3576.1'
+    'x-ms-keyvault-network-info': 'conn_type=Ipv4;addr=115.76.50.132;act_addr_fam=InterNetwork;'
+    'x-ms-keyvault-rbac-assignment-id': 'REDACTED'
+    'x-ms-keyvault-rbac-cache': 'REDACTED'
+    'X-Content-Type-Options': 'REDACTED'
+    'Strict-Transport-Security': 'REDACTED'
+    'Date': 'Sat, 22 Aug 2026 09:10:27 GMT'
+    'Content-Length': '340'
+2026-08-22 16:10:27,986 | INFO | Decrypted API configuration keys successfully.
+2026-08-22 16:10:27,986 | INFO | ==================================================
+2026-08-22 16:10:27,987 | INFO | KHỞI CHẠY CHAOS TEST: 50 REQUESTS
+2026-08-22 16:10:27,987 | INFO | ==================================================
+2026-08-22 16:10:28,149 | INFO | Req-00 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,153 | INFO | Req-03 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,154 | INFO | Req-04 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,154 | INFO | Req-02 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,184 | INFO | Req-01 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,314 | INFO | Req-05 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,314 | INFO | Req-08 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,318 | INFO | Req-07 [VALID] -> HTTP 404
+2026-08-22 16:10:28,319 | INFO | Req-06 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,339 | INFO | Req-09 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,481 | INFO | Req-12 [VALID] -> HTTP 404
+2026-08-22 16:10:28,484 | INFO | Req-11 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,490 | INFO | Req-10 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,493 | INFO | Req-13 [VALID] -> HTTP 404
+2026-08-22 16:10:28,508 | INFO | Req-14 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,642 | INFO | Req-16 [VALID] -> HTTP 404
+2026-08-22 16:10:28,648 | INFO | Req-18 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,651 | INFO | Req-17 [VALID] -> HTTP 404
+2026-08-22 16:10:28,660 | INFO | Req-15 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,678 | INFO | Req-19 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,801 | INFO | Req-20 [VALID] -> HTTP 404
+2026-08-22 16:10:28,807 | INFO | Req-21 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,814 | INFO | Req-23 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,818 | INFO | Req-22 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,852 | INFO | Req-24 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,957 | INFO | Req-25 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:28,977 | INFO | Req-26 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,978 | INFO | Req-28 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:28,978 | INFO | Req-27 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,015 | INFO | Req-29 [VALID] -> HTTP 404
+2026-08-22 16:10:29,146 | INFO | Req-31 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,146 | INFO | Req-30 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,146 | INFO | Req-33 [VALID] -> HTTP 404
+2026-08-22 16:10:29,153 | INFO | Req-32 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,188 | INFO | Req-34 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,305 | INFO | Req-38 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,308 | INFO | Req-36 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,329 | INFO | Req-35 [VALID] -> HTTP 404
+2026-08-22 16:10:29,333 | INFO | Req-37 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,340 | INFO | Req-39 [VALID] -> HTTP 404
+2026-08-22 16:10:29,464 | INFO | Req-41 [VALID] -> HTTP 404
+2026-08-22 16:10:29,464 | INFO | Req-40 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,484 | INFO | Req-42 [VALID] -> HTTP 404
+2026-08-22 16:10:29,501 | INFO | Req-43 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,516 | INFO | Req-44 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,623 | INFO | Req-46 [UNAUTHORIZED] -> HTTP 401
+2026-08-22 16:10:29,639 | INFO | Req-45 [VALID] -> HTTP 404
+2026-08-22 16:10:29,658 | INFO | Req-47 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,661 | INFO | Req-48 [VALID] -> HTTP 404
+2026-08-22 16:10:29,673 | INFO | Req-49 [BAD_REQUEST] -> HTTP 404
+2026-08-22 16:10:29,676 | INFO | 
+==================================================
+2026-08-22 16:10:29,676 | INFO | TỔNG HỢP HTTP STATUS CODES:
+2026-08-22 16:10:29,677 | INFO | HTTP 404: 33 requests
+2026-08-22 16:10:29,677 | INFO | HTTP 401: 17 requests
+2026-08-22 16:10:29,677 | INFO | ==================================================
+2026-08-22 16:10:29,677 | WARNING | BẮT BUỘC CHỜ 5 PHÚT ĐỂ LOG ANALYTICS HOÀN TẤT ĐỒNG BỘ DỮ LIỆU (INGESTION)...
+2026-08-22 16:10:29,677 | WARNING | TUYỆT ĐỐI KHÔNG XÓA ENDPOINT LÚC NÀY.

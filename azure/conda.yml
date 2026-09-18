@@ -1,0 +1,8 @@
+name: data-pipeline-env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip:
+    - langchain-huggingface==0.0.1
+    - langchain-chroma==0.1.1

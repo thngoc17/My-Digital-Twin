@@ -1,0 +1,6 @@
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: profile_json_data
+version: 1
+type: uri_file
+path: ../my_data/profile.json
+description: "Dữ liệu cá nhân dạng JSON để sinh Vector Database"
