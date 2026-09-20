@@ -2,6 +2,6 @@ $schema: https://azuremlschemas.azureedge.net/latest/model.schema.json
 name: qwen3-4b-gguf-model
 version: 1
 # [ĐÃ SỬA]: Lùi 1 cấp ra khỏi azure/, tiến vào thư mục source/
-path: ../source/qwen3-4b-instruct-2507.Q4_K_M.gguf
+path: ../model/qwen3-4b-instruct-2507.Q4_K_M.gguf
 type: custom_model
 description: "Mô hình Qwen 4B đã lượng tử hóa Q4_K_M phục vụ cho RAG inference trên CPU."
