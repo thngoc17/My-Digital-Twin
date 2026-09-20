@@ -15,9 +15,9 @@
 set -euo pipefail
 
 SUBSCRIPTION_ID="f6b812fd-ef94-4ce1-948f-ea652339a497"
-RESOURCE_GROUP="digital-twin-rg"     # Phải khớp với GitHub repo Variable "RESOURCE_GROUP"
+RESOURCE_GROUP="qwen-digital-twin-rg"     # Phải khớp với GitHub repo Variable "RESOURCE_GROUP"
 LOCATION="eastasia"
-SP_NAME="sp-digital-twin-cicd"
+SP_NAME="sp-qwen-digital-twin"
 
 echo "==> Đăng nhập và chọn đúng subscription..."
 az account set --subscription "$SUBSCRIPTION_ID"

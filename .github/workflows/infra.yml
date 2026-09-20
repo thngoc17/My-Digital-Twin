@@ -41,7 +41,7 @@ jobs:
           template: infra/main.bicep
           deploymentName: mlops-infra-${{ github.run_number }}
           parameters: >
-            location=${{ github.event.inputs.location || 'southeastasia' }}
+            location=${{ github.event.inputs.location || 'eastasia' }}
             workspaceName=${{ vars.WORKSPACE || 'mlops-workspace' }}
             keyVaultName=${{ vars.KEY_VAULT_NAME || 'qwen-twin-vault' }}
       # Không truyền acrName: Bicep tự sinh tên duy nhất (deterministic) — xem infra/main.bicep.
