@@ -1,4 +1,6 @@
-// Module này chạy trong scope của Resource Group (được gọi từ infra/main.bicep ở subscription scope)
+// Module này chạy trong scope của Resource Group (RG đã tồn tại từ trước — xem infra/bootstrap.sh).
+// Toàn bộ resource ở đây chỉ cần quyền Contributor trên RG. KHÔNG có resource nào loại
+// Microsoft.Authorization/roleAssignments — vì Contributor không được phép tạo loại đó.
 
 @description('Vùng Azure')
 param location string
@@ -6,18 +8,13 @@ param location string
 @description('Tên Azure ML Workspace')
 param workspaceName string
 
-@description('Tên Azure Container Registry (chỉ chữ thường/số, 5-50 ký tự, phải unique toàn cầu trong Azure)')
-param acrName string
+@description('Tên Azure Container Registry. Để trống để tự sinh tên duy nhất, không hard-code.')
+param acrName string = ''
 
 @description('Tên Azure Key Vault (đang khớp với test/stress-test.py và test/chaos-test.py)')
 param keyVaultName string
 
-@description('Object ID (không phải Client ID) của Service Principal dùng trong secrets.AZURE_CREDENTIALS của GitHub Actions')
-param githubActionsPrincipalId string
-
-@description('Có tạo role assignment Contributor cho SP CI/CD hay không. Đặt false nếu SP chạy Bicep không có quyền User Access Administrator/Owner ở subscription.')
-param assignContributorRole bool = true
-
+var effectiveAcrName = empty(acrName) ? toLower('acr${uniqueString(resourceGroup().id)}') : acrName
 var storageAccountName = toLower('st${uniqueString(resourceGroup().id)}')
 var appInsightsName = '${workspaceName}-ai'
 
@@ -35,7 +32,11 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
 }
 
-// RBAC-based Key Vault (không dùng access policy kiểu cũ)
+// Dùng access policy kiểu cổ điển (KHÔNG bật RBAC) một cách CÓ CHỦ ĐÍCH:
+// việc set accessPolicies là một property write bình thường trên chính resource Key Vault
+// (nằm trong quyền Contributor), khác với việc tạo Microsoft.Authorization/roleAssignments
+// (đòi hỏi User Access Administrator/Owner). Đây là cách né việc cần quyền cao mà vẫn
+// cấp được quyền đọc/ghi secret cho managed identity của Workspace.
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: keyVaultName
   location: location
@@ -45,8 +46,9 @@ resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
       name: 'standard'
     }
     tenantId: subscription().tenantId
-    enableRbacAuthorization: true
+    enableRbacAuthorization: false
     enabledForTemplateDeployment: true
+    accessPolicies: []
   }
 }
 
@@ -61,13 +63,13 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 // SKU phải >= Standard: Azure ML không cho gắn ACR tier Basic vào workspace
 resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
-  name: acrName
+  name: effectiveAcrName
   location: location
   sku: {
     name: 'Standard'
   }
   properties: {
-    adminUserEnabled: false // dùng RBAC (AAD) qua `az acr login`, không cần admin user
+    adminUserEnabled: false // dùng AAD token (`az acr login`) nhờ Contributor, không cần admin user
   }
 }
 
@@ -90,31 +92,33 @@ resource mlWorkspace 'Microsoft.MachineLearningServices/workspaces@2023-04-01' =
   }
 }
 
-// Cấp quyền cho managed identity của Workspace được đọc/ghi secret trong Key Vault (RBAC)
-resource kvRoleForWorkspace 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(keyVault.id, mlWorkspace.id, 'KeyVaultSecretsOfficer')
-  scope: keyVault
+// Child resource riêng (thay vì roleAssignment) để tránh vòng phụ thuộc:
+// Key Vault cần tồn tại trước để Workspace tham chiếu tới, nhưng access policy
+// lại cần principalId của Workspace — nên phải add SAU khi cả hai đã tồn tại.
+// Đây vẫn chỉ là property write trên Key Vault, không đụng tới Authorization RBAC.
+resource kvAccessPolicyForWorkspace 'Microsoft.KeyVault/vaults/accessPolicies@2023-07-01' = {
+  parent: keyVault
+  name: 'add'
   properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b86a8fe4-44ce-4948-aee5-eccb2c155cd7') // Key Vault Secrets Officer
-    principalId: mlWorkspace.identity.principalId
-    principalType: 'ServicePrincipal'
-  }
-}
-
-// Cấp quyền Contributor cho SP của GitHub Actions trên toàn bộ Resource Group
-// ⚠️ Yêu cầu: SP chạy deployment Bicep này phải có "User Access Administrator" hoặc "Owner"
-//    ở cấp subscription, nếu không resource này sẽ lỗi vì Contributor không được phép tạo role assignment.
-resource ciCdContributorRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (assignContributorRole) {
-  name: guid(resourceGroup().id, githubActionsPrincipalId, 'Contributor')
-  scope: resourceGroup()
-  properties: {
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c') // Contributor
-    principalId: githubActionsPrincipalId
-    principalType: 'ServicePrincipal'
+    accessPolicies: [
+      {
+        tenantId: subscription().tenantId
+        objectId: mlWorkspace.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+            'set'
+            'delete'
+          ]
+        }
+      }
+    ]
   }
 }
 
 output workspaceName string = mlWorkspace.name
+output acrName string = acr.name
 output acrLoginServer string = acr.properties.loginServer
 output keyVaultUri string = keyVault.properties.vaultUri
 output storageAccountName string = storageAccount.name

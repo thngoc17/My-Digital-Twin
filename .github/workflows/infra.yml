@@ -1,5 +1,11 @@
 name: Provision Infrastructure (Bicep)
 
+# ⚠️ Yêu cầu trước khi chạy workflow này lần đầu: đã chạy `infra/bootstrap.sh` thủ công
+# (1 lần, bởi người có quyền subscription) để tạo Resource Group và gán Contributor
+# cho Service Principal (secrets.AZURE_CREDENTIALS) CHỈ trên đúng Resource Group đó.
+# Workflow này KHÔNG tự tạo Resource Group, và SP dùng ở đây không cần quyền gì cao hơn
+# Contributor-trên-1-RG.
+
 on:
   workflow_dispatch:
     inputs:
@@ -24,20 +30,20 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # scope=subscription vì template infra/main.bicep tự tạo Resource Group,
-      # nên bắt buộc phải deploy ở cấp subscription (RG chưa tồn tại lúc bắt đầu).
-      - name: Deploy Bicep - tạo toàn bộ RG + tài nguyên
+      # scope=resourcegroup: Resource Group ĐÃ tồn tại từ trước (tạo 1 lần bằng infra/bootstrap.sh
+      # bởi người có quyền cao). Nhờ vậy SP dùng ở đây chỉ cần Contributor trên đúng RG này —
+      # không cần Owner/Contributor ở subscription.
+      - name: Deploy Bicep - tạo tài nguyên bên trong Resource Group có sẵn
         uses: azure/arm-deploy@v2
         with:
-          scope: subscription
-          region: ${{ github.event.inputs.location || 'eastasia' }}
+          scope: resourcegroup
+          resourceGroupName: ${{ vars.RESOURCE_GROUP || 'digital-twin-rg' }}
           template: infra/main.bicep
           deploymentName: mlops-infra-${{ github.run_number }}
           parameters: >
-            resourceGroupName=${{ vars.RESOURCE_GROUP || 'digital-twin-rg' }}
-            workspaceName=${{ vars.WORKSPACE || 'qwen-twin-workspace' }}
+            location=${{ github.event.inputs.location || 'southeastasia' }}
+            workspaceName=${{ vars.WORKSPACE || 'mlops-workspace' }}
             keyVaultName=${{ vars.KEY_VAULT_NAME || 'qwen-rag-vault' }}
-            githubActionsPrincipalId=${{ secrets.AZURE_SP_OBJECT_ID }}
       # Không truyền acrName: Bicep tự sinh tên duy nhất (deterministic) — xem infra/main.bicep.
       # deploy.yml sẽ tự tìm ra ACR này bằng `az acr list -g <resource_group>`, không hard-code ở đâu cả.
 
