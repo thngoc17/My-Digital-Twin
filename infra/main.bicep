@@ -7,13 +7,13 @@
 param location string = 'eastasia'
 
 @description('Tên Azure ML Workspace. Nên set qua GitHub repo Variable "WORKSPACE" — dùng chung bởi infra.yml và deploy.yml.')
-param workspaceName string = 'qwen-twin-workspace'
+param workspaceName string = 'qwen-chatbot-twin-workspace'
 
 @description('Tên Azure Container Registry. Để trống để Bicep tự sinh tên duy nhất — không nên hard-code.')
 param acrName string = ''
 
 @description('Tên Azure Key Vault — mặc định khớp với tên đang hardcode trong test/stress-test.py và test/chaos-test.py')
-param keyVaultName string = 'qwen-twin-vault'
+param keyVaultName string = 'qwen-chatbot-twin-vault'
 
 module mlopsResources 'modules/mlops-resources.bicep' = {
   name: 'mlopsResourcesDeployment'

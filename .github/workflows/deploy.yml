@@ -6,7 +6,7 @@ on:
       - 'v*.*.*' # Chỉ chạy khi có git tag dạng v1.0.0
 
 env:
-  WORKSPACE: ${{ vars.WORKSPACE || 'qwen-twin-workspace' }}         # Cùng nguồn với infra.yml (GitHub repo Variable)
+  WORKSPACE: ${{ vars.WORKSPACE || 'mlops-workspace' }}         # Cùng nguồn với infra.yml (GitHub repo Variable)
   RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP || 'digital-twin-rg' }} # Cùng nguồn với infra.yml (GitHub repo Variable)
   IMAGE_NAME: "qwen-rag-api"                          # Khớp với azure/deployment.yml
   ENDPOINT_NAME: "qwen-rag-endpoint-ver1"              # Khớp với azure/endpoint.yml
@@ -14,7 +14,15 @@ env:
   IMAGE_TAG: "v1.${{ github.run_number }}"            # Tag image linh hoạt theo từng lần chạy
 
 jobs:
+  # Luôn chạy infra.yml TRƯỚC, như một job trong chính workflow run này (không phải
+  # một workflow run riêng biệt) — nhờ vậy GitHub Actions tự đảm bảo thứ tự,
+  # thay vì để 2 workflow độc lập chạy song song khi cùng bị trigger bởi 1 lần push.
+  ensure-infra:
+    uses: ./.github/workflows/infra.yml
+    secrets: inherit
+
   build-register-deploy:
+    needs: ensure-infra
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code

@@ -17,6 +17,13 @@ on:
     branches: [main]
     paths:
       - 'infra/**'
+  workflow_call:
+    inputs:
+      location:
+        description: 'Azure region để triển khai'
+        required: false
+        type: string
+        default: 'eastasia'
 
 jobs:
   deploy-infra:
