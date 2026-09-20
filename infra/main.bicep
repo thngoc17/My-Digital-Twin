@@ -13,7 +13,7 @@ param workspaceName string = 'qwen-twin-workspace'
 param acrName string = ''
 
 @description('Tên Azure Key Vault — mặc định khớp với tên đang hardcode trong test/stress-test.py và test/chaos-test.py')
-param keyVaultName string = 'qwen-rag-vault'
+param keyVaultName string = 'qwen-twin-vault'
 
 module mlopsResources 'modules/mlops-resources.bicep' = {
   name: 'mlopsResourcesDeployment'

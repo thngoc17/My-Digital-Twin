@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # 1. XÁC THỰC BẢO MẬT (KEY VAULT)
 # ==========================================
-KEY_VAULT_NAME = "qwen-rag-vault"
+KEY_VAULT_NAME = "qwen-twin-vault"
 KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
 
 try:

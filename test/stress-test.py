@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 # ==========================================
 # 1. ZERO-TRUST AUTHENTICATION ARCHITECTURE
 # ==========================================
-KEY_VAULT_NAME = "qwen-rag-vault"
+KEY_VAULT_NAME = "qwen-twin-vault"
 KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
 
 logger.info(f"Authenticating with Azure Key Vault at {KV_URI}...")
