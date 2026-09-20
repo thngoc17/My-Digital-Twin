@@ -43,7 +43,7 @@ jobs:
           parameters: >
             location=${{ github.event.inputs.location || 'southeastasia' }}
             workspaceName=${{ vars.WORKSPACE || 'mlops-workspace' }}
-            keyVaultName=${{ vars.KEY_VAULT_NAME || 'qwen-rag-vault' }}
+            keyVaultName=${{ vars.KEY_VAULT_NAME || 'qwen-twin-vault' }}
       # Không truyền acrName: Bicep tự sinh tên duy nhất (deterministic) — xem infra/main.bicep.
       # deploy.yml sẽ tự tìm ra ACR này bằng `az acr list -g <resource_group>`, không hard-code ở đâu cả.
 
