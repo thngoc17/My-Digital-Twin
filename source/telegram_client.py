@@ -10,7 +10,7 @@ from azure.core.exceptions import ClientAuthenticationError, ResourceNotFoundErr
 # ==========================================
 # 1. AUTHENTICATION & SECRET EXTRACTION
 # ==========================================
-KEY_VAULT_NAME = "qwen-rag-vault"  # Insert Vault name here
+KEY_VAULT_NAME = "qwen-chatbot-twin-vault"  # Insert Vault name here
 KV_URI = f"https://{KEY_VAULT_NAME}.vault.azure.net"
 
 print(f"INFO: Authenticating with Azure Key Vault at {KV_URI}")

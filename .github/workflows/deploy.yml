@@ -53,8 +53,8 @@ jobs:
           echo "ACR_NAME=$ACR_NAME" >> "$GITHUB_ENV"
 
       # BYOM: model .gguf đã được huấn luyện, đóng băng và đăng ký sẵn trong Azure ML Models
-      # (azure/model.yml chỉ còn dùng để đối chiếu tên/version khi kiểm tra idempotent bên dưới).
-      # Container lấy model trực tiếp qua AZUREML_MODEL_DIR khi Azure ML mount deployment — không cần tải gì ở đây.
+      # bằng infra/seed-model.sh (chạy thủ công từ máy đang giữ file — xem step kiểm tra bên dưới).
+      # Container lấy model trực tiếp qua AZUREML_MODEL_DIR khi Azure ML mount deployment.
 
       - name: Login to Azure Container Registry (ACR)
         run: az acr login --name ${{ env.ACR_NAME }}
@@ -91,22 +91,21 @@ jobs:
       - name: Register Knowledge Base Vector DB Asset
         run: az ml data create -f azure/knowledge_db.yml
 
-      - name: Register Qwen GGUF Model
+      # BYOM: file .gguf chỉ tồn tại trên máy cá nhân, không thể commit lên GitHub và
+      # GitHub Actions runner không có cách nào truy cập máy đó. Vì vậy CI KHÔNG đăng ký
+      # model — nó chỉ XÁC MINH model đã được seed từ trước (xem infra/seed-model.sh).
+      - name: Verify Qwen GGUF Model Is Registered (seeded thủ công, xem infra/seed-model.sh)
         run: |
           MODEL_NAME=$(grep '^name:' azure/model.yml | awk '{print $2}')
           MODEL_VERSION=$(grep '^version:' azure/model.yml | awk '{print $2}')
 
-          if [ -z "$MODEL_VERSION" ]; then
-            echo "Không có version cụ thể trong YAML. Đăng ký với auto-increment..."
-            az ml model create -f azure/model.yml
-            exit 0
-          fi
-
           if az ml model show --name "$MODEL_NAME" --version "$MODEL_VERSION" > /dev/null 2>&1; then
-            echo "Model $MODEL_NAME v$MODEL_VERSION đã tồn tại. BỎ QUA đăng ký."
+            echo "Model $MODEL_NAME v$MODEL_VERSION đã tồn tại trong Workspace. OK, tiếp tục."
           else
-            echo "Đăng ký model mới..."
-            az ml model create -f azure/model.yml
+            echo "::error::Model $MODEL_NAME v$MODEL_VERSION CHƯA tồn tại trong Workspace '${{ env.WORKSPACE }}'."
+            echo "::error::File .gguf chỉ có trên máy cá nhân của bạn — GitHub Actions không thể tự upload/đăng ký nó."
+            echo "::error::Chạy 'infra/seed-model.sh' THỦ CÔNG từ máy đang giữ file .gguf (thường là sau khi infra vừa được tạo lại), rồi chạy lại release này."
+            exit 1
           fi
 
       - name: Create or Update Online Endpoint
