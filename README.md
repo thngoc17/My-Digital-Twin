@@ -29,16 +29,6 @@ The sections below cover the architecture, the infrastructure, the ML pipeline, 
     width="480"
   />
 </a>
-<circle
-  cx="640"
-  cy="360"
-  r="70"
-  fill="white"
-  opacity="0.9"/>
-
-<polygon
-  points="620,320 620,400 690,360"
-  fill="#111"/>
 
 ---
 
