@@ -26,7 +26,7 @@ The sections below cover the architecture, the infrastructure, the ML pipeline, 
   <img
     src="https://i.ytimg.com/vi/4AZ7PPyMX3o/hqdefault.jpg"
     alt="Demo"
-    width="1280"
+    width="960"
   />
 </a>
 
