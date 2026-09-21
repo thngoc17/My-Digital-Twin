@@ -22,7 +22,7 @@ The sections below cover the architecture, the infrastructure, the ML pipeline, 
 
 ## Demo
 
-[![Demo](https://img.youtube.com/vi/4AZ7PPyMX3o/maxresdefault.jpg)](https://youtu.be/4AZ7PPyMX3o)
+[![Demo](https://i.ytimg.com/vi/4AZ7PPyMX3o/hqdefault.jpg)](https://youtu.be/4AZ7PPyMX3o)
 
 ---
 
