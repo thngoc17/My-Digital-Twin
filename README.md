@@ -20,7 +20,7 @@ The sections below cover the architecture, the infrastructure, the ML pipeline, 
 
 ---
 
-## Demo
+## Demo (click the image to follow the YouTube link)
 
 <a href="https://youtu.be/4AZ7PPyMX3o">
   <img
